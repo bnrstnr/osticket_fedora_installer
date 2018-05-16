@@ -94,4 +94,5 @@ sed -i -e 's/%CONFIG-DBUSER/ost_user/'      /var/www/html/helpdesk/include/ost-c
 sed -i -e 's/%CONFIG-DBPASS/$ostpass/'      /var/www/html/helpdesk/include/ost-config.php
 sed -i -e 's/%CONFIG-PREFIX/ost_/'          /var/www/html/helpdesk/include/ost-config.php
 
-php /var/www/html/helpdesk/setup/install.php --fname=$adminfname --lname=$adminlname --admin_email=$adminemail
+cd /var/www/html/helpdesk/setup
+php -f install.php fname=$adminfname lname=$adminlname admin_email=$adminemail
