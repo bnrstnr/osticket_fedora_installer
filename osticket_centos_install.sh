@@ -26,15 +26,15 @@ echo "Default System Email? (Default email address e.g. support@yourcompany.com 
 read ostemail
 echo ""
 echo "Setup for the osTicket Admin User"
-echo "Enter the First Name of the Admin User"
+echo "Admin First Name"
 read adminfname
-echo "Enter the Last Name of the Admin User"
+echo "Admin Last Name"
 read adminlname
-echo "Enter the Email Address of the Admin User"
+echo "Admin Email Address (Admin's personal email address. Must be different from system's default email.)"
 read adminemail
-echo "Enter the Username of the Admin User"
+echo "Username (Admin's login name. Must be at least three (3) characters.)"
 read adminusername
-echo "Enter the initial password for the Admin User"
+echo "Password (Admin's password.  Must be five (5) characters or more.)"
 read adminpass
 
 #export osticketpath='/var/www/html/helpdesk'
@@ -78,7 +78,7 @@ mysql -e "DROP DATABASE test;"
 mysql -e "FLUSH PRIVILEGES;"
 
 #Setup osTicket
-cd
+cd /tmp/
 git clone $osticket
 cd osTicket
 php manage.php deploy --setup /var/www/html/helpdesk
@@ -94,4 +94,4 @@ sed -i -e 's/%CONFIG-DBUSER/ost_user/'      /var/www/html/helpdesk/include/ost-c
 sed -i -e 's/%CONFIG-DBPASS/$ostpass/'      /var/www/html/helpdesk/include/ost-config.php
 sed -i -e 's/%CONFIG-PREFIX/ost_/'          /var/www/html/helpdesk/include/ost-config.php
 
-php /var/www/html/helpdesk/setup/install.php --fname=$adminfname --lname=$adminlname --admin_email=$adminemail --
+php /var/www/html/helpdesk/setup/install.php --fname=$adminfname --lname=$adminlname --admin_email=$adminemail
