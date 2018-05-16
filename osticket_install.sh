@@ -29,11 +29,13 @@ export datapath='/data'
 export httpdrw='httpd_sys_rw_content_t'
 
 #Install required packages
-dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-28.noarch.rpm
-dnf -y --enablerepo=remi install wget unzip httpd mariadb mariadb-server php56-php php56-php-gd php56-php-gettext php56-php-imap php56-php-json php56-php-mbstring php56-php-xml php56-php-mysqlnd php56-php-apc
+dnf -y install https://rpms.remirepo.net/fedora/remi-release-28.rpm
+dnf -y --enablerepo=remi install wget git unzip httpd mariadb mariadb-server php56-php php56-php-gd php56-php-gettext php56-php-imap php56-php-json php56-php-mbstring php56-php-xml php56-php-mysqlnd php56-php-apc
 
 #Install optional packages
-dnf -y install nano dnf-automatic fail2ban policycoreutils-python-utils
+#dnf -y install nano dnf-automatic fail2ban policycoreutils-python-utils
+
+ln -s /opt/remi/php56/root/usr/bin/php /usr/bin/php
 
 #Open the firewall for http and https
 firewall-cmd --add-port=http/tcp --permanent
@@ -50,3 +52,7 @@ mysql -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost',
 mysql -e "DELETE FROM mysql.user WHERE User='';"
 mysql -e "DROP DATABASE test;"
 mysql -e "FLUSH PRIVILEGES;"
+
+git clone $osticket
+
+
