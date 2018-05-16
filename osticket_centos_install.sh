@@ -19,7 +19,12 @@ read ostpass
 echo "Enter the MariaDB root user password: "
 read rootpass
 echo ""
-echo "Setup osTicket 
+echo "Setup osTicket"
+echo "Helpdesk Name? (The name of your support system e.g. [Company Name] Support"
+read ostname
+echo "Default System Email? (Default email address e.g. support@yourcompany.com - you can add more later!"
+read ostemail
+echo ""
 echo "Setup for the osTicket Admin User"
 echo "Enter the First Name of the Admin User"
 read adminfname
