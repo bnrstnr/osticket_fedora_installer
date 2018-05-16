@@ -12,17 +12,26 @@ fi
 osticket="https://github.com/osTicket/osTicket"
 
 echo "Installing osTicket for CentOS 7 Minimal"
-echo "If you have not made a DNS entry for the system,"
-echo "it is recommended that you do so now."
+#echo "If you have not made a DNS entry for the system,"
+#echo "it is recommended that you do so now."
 echo ""
+echo "Database setup for osTicket"
 echo "Enter the database password for osTicket: "
 read ostpass
 echo "Enter the MariaDB root user password: "
 read rootpass
-#echo "Enter the name of your web admin user account (ex. admin)"
-#read adminuser
-#echo "Enter the initial password for admin"
-#read adminpass
+echo ""
+echo "osTicket Admin User Setup"
+echo "Enter the First Name of the Admin User"
+read adminfirstname
+echo "Enter the Last Name of the Admin User"
+read adminlastname
+echo "Enter the Email Address of the Admin User"
+read adminemail
+echo "Enter the Username of the Admin User"
+read adminusername
+echo "Enter the initial password for the Admin User"
+read adminpass
 
 export osticketpath='/var/www/html/helpdesk'
 export datapath='/data'
@@ -70,8 +79,12 @@ git clone $osticket
 cd osTicket
 php manage.php deploy --setup /var/www/html/helpdesk
 chown -R apache:apache /var/www/html/helpdesk
+cd /var/www/html/helpdesk
 cp include/ost-sampleconfig.php include/ost-config.php
-chmod 0666 include/ost-config.php
 
-sed -i -e 's/;
-
+sed -i -e 's/%ADMIN-EMAIL/$adminemail/'     /var/www/html/helpdesk/include/ost-config.php
+sed -i -e 's/%CONFIG-DBHOST/localhost/'     /var/www/html/helpdesk/include/ost-config.php
+sed -i -e 's/%CONFIG-DBNAME/ost_db/'        /var/www/html/helpdesk/include/ost-config.php
+sed -i -e 's/%CONFIG-DBUSER/ost_user/'      /var/www/html/helpdesk/include/ost-config.php
+sed -i -e 's/%CONFIG-DBPASS/$ostpass/'      /var/www/html/helpdesk/include/ost-config.php
+sed -i -e 's/%CONFIG-PREFIX/ost_/'          /var/www/html/helpdesk/include/ost-config.php
