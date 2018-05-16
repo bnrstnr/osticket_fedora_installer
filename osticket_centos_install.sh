@@ -19,11 +19,12 @@ read ostpass
 echo "Enter the MariaDB root user password: "
 read rootpass
 echo ""
+echo "Setup osTicket 
 echo "Setup for the osTicket Admin User"
 echo "Enter the First Name of the Admin User"
-read adminfirstname
+read adminfname
 echo "Enter the Last Name of the Admin User"
-read adminlastname
+read adminlname
 echo "Enter the Email Address of the Admin User"
 read adminemail
 echo "Enter the Username of the Admin User"
@@ -31,9 +32,9 @@ read adminusername
 echo "Enter the initial password for the Admin User"
 read adminpass
 
-export osticketpath='/var/www/html/helpdesk'
-export datapath='/data'
-export httpdrw='httpd_sys_rw_content_t'
+#export osticketpath='/var/www/html/helpdesk'
+#export datapath='/data'
+#export httpdrw='httpd_sys_rw_content_t'
 
 #Install required packages
 yum -y update
@@ -44,7 +45,7 @@ rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm
 cd /etc/yum.repos.d
 wget https://rpms.remirepo.net/enterprise/remi.repo
 
-yum -y --enablerepo=remi-php56 install git unzip httpd mariadb mariadb-server php php-gd php-gettext php-imap php-json php-mbstring php-xml php-mysqlnd php-apc php-intl php-pecl-zendopcache
+yum -y --enablerepo=remi-php56 install git httpd mariadb mariadb-server php php-gd php-gettext php-imap php-json php-mbstring php-xml php-mysqlnd php-apc php-intl php-pecl-zendopcache
 
 #Install optional packages
 #yum -y install nano dnf-automatic fail2ban policycoreutils-python-utils
@@ -79,6 +80,7 @@ php manage.php deploy --setup /var/www/html/helpdesk
 chown -R apache:apache /var/www/html/helpdesk
 cd /var/www/html/helpdesk
 cp include/ost-sampleconfig.php include/ost-config.php
+chcon -t httpd_sys_rw_content_t /var/www/html/helpdesk -R
 
 sed -i -e 's/%ADMIN-EMAIL/$adminemail/'     /var/www/html/helpdesk/include/ost-config.php
 sed -i -e 's/%CONFIG-DBHOST/localhost/'     /var/www/html/helpdesk/include/ost-config.php
@@ -86,3 +88,5 @@ sed -i -e 's/%CONFIG-DBNAME/ost_db/'        /var/www/html/helpdesk/include/ost-c
 sed -i -e 's/%CONFIG-DBUSER/ost_user/'      /var/www/html/helpdesk/include/ost-config.php
 sed -i -e 's/%CONFIG-DBPASS/$ostpass/'      /var/www/html/helpdesk/include/ost-config.php
 sed -i -e 's/%CONFIG-PREFIX/ost_/'          /var/www/html/helpdesk/include/ost-config.php
+
+php /var/www/html/helpdesk/setup/install.php --fname=$adminfname --lname=$adminlname --admin_email=$adminemail --
