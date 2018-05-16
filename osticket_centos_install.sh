@@ -12,16 +12,14 @@ fi
 osticket="https://github.com/osTicket/osTicket"
 
 echo "Installing osTicket for CentOS 7 Minimal"
-#echo "If you have not made a DNS entry for the system,"
-#echo "it is recommended that you do so now."
 echo ""
-echo "Database setup for osTicket"
+echo "Setup for the osTicket Database"
 echo "Enter the database password for osTicket: "
 read ostpass
 echo "Enter the MariaDB root user password: "
 read rootpass
 echo ""
-echo "osTicket Admin User Setup"
+echo "Setup for the osTicket Admin User"
 echo "Enter the First Name of the Admin User"
 read adminfirstname
 echo "Enter the Last Name of the Admin User"
